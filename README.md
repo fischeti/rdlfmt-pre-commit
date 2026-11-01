@@ -6,7 +6,7 @@ A [pre-commit](https://pre-commit.com) hook for
 ```yaml
 repos:
   - repo: https://github.com/fischeti/rdlfmt-pre-commit
-    rev: v0.1.0
+    rev: v0.1.1
     hooks:
       - id: rdlfmt
 ```
