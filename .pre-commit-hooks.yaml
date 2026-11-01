@@ -1,0 +1,13 @@
+- id: rdlfmt
+  name: rdlfmt
+  description: Format SystemRDL files in place.
+  entry: rdlfmt
+  language: python
+  files: \.rdl$
+
+- id: rdlfmt-check
+  name: rdlfmt (check)
+  description: Check that SystemRDL files are formatted, without changing them.
+  entry: rdlfmt --check
+  language: python
+  files: \.rdl$

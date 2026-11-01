@@ -1,0 +1,33 @@
+# Follows rdlfmt's releases: pins the newest version on PyPI and tags it.
+# Polling PyPI rather than being notified by the rdlfmt repository needs no
+# token of its own, and tags only what pip can install.
+name: Bump
+
+on:
+  schedule:
+    - cron: '23 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Pin and tag the latest release
+        run: |
+          latest=$(curl -fsS https://pypi.org/pypi/rdlfmt/json | jq -r .info.version)
+          current=$(sed -n 's/.*"rdlfmt==\(.*\)".*/\1/p' pyproject.toml)
+          if [ "$latest" = "$current" ]; then
+            echo "rdlfmt $current is the latest"
+            exit 0
+          fi
+          sed -i "s/\"rdlfmt==$current\"/\"rdlfmt==$latest\"/" pyproject.toml
+          sed -i "s/rev: v$current/rev: v$latest/" README.md
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -am "rdlfmt $latest"
+          git tag "v$latest"
+          git push origin HEAD "v$latest"

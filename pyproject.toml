@@ -1,0 +1,13 @@
+# pre-commit installs this package to install the hook. It holds no code: it
+# only pins the rdlfmt wheel from PyPI, so that the hook needs no Rust toolchain.
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rdlfmt-pre-commit"
+version = "0.0.0"
+dependencies = ["rdlfmt==0.1.0"]
+
+[tool.setuptools]
+py-modules = []
